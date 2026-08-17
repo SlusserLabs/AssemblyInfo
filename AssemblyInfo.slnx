@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="src/AssemblyInfo/AssemblyInfo.csproj" />
+  <Project Path="src/AssemblyInfo.Attributes/AssemblyInfo.Attributes.csproj" />
+  <Project Path="tests/AssemblyInfo.Tests/AssemblyInfo.Tests.csproj" />
+</Solution>

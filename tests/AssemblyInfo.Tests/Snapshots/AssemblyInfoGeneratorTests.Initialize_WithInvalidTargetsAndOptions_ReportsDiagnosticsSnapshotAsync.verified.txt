@@ -1,0 +1,53 @@
+﻿{
+  Diagnostics: [
+    {
+      Message: Type 'NotPartial' must be partial to receive generated assembly information,
+      Severity: Error,
+      Descriptor: {
+        Id: SLAI001,
+        Title: Assembly information target must be partial,
+        MessageFormat: Type '{0}' must be partial to receive generated assembly information,
+        Category: SlusserLabs.AssemblyInfo,
+        DefaultSeverity: Error,
+        IsEnabledByDefault: true
+      }
+    },
+    {
+      Message: Containing type 'Outer' must be partial to generate assembly information for a nested type,
+      Severity: Error,
+      Descriptor: {
+        Id: SLAI002,
+        Title: Containing type must be partial,
+        MessageFormat: Containing type '{0}' must be partial to generate assembly information for a nested type,
+        Category: SlusserLabs.AssemblyInfo,
+        DefaultSeverity: Error,
+        IsEnabledByDefault: true
+      }
+    },
+    {
+      Message: Type 'FileLocal' cannot receive generated assembly information,
+      Severity: Error,
+      Descriptor: {
+        Id: SLAI003,
+        Title: Assembly information target is not supported,
+        MessageFormat: Type '{0}' cannot receive generated assembly information,
+        Category: SlusserLabs.AssemblyInfo,
+        DefaultSeverity: Error,
+        IsEnabledByDefault: true
+      }
+    },
+    {
+      Message: Type 'UnknownOptions' uses undefined AssemblyInfoOptions flags: 0x400,
+      Severity: Warning,
+      WarningLevel: 1,
+      Descriptor: {
+        Id: SLAI005,
+        Title: Assembly information options contain undefined flags,
+        MessageFormat: Type '{0}' uses undefined AssemblyInfoOptions flags: 0x{1},
+        Category: SlusserLabs.AssemblyInfo,
+        DefaultSeverity: Warning,
+        IsEnabledByDefault: true
+      }
+    }
+  ]
+}

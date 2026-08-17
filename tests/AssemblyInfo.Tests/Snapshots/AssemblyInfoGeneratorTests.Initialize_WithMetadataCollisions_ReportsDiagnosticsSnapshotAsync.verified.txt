@@ -1,0 +1,28 @@
+﻿{
+  Diagnostics: [
+    {
+      Message: Assembly metadata key 'Company' produces the duplicate member name 'Company',
+      Severity: Error,
+      Descriptor: {
+        Id: SLAI004,
+        Title: Assembly metadata name conflicts with a generated member,
+        MessageFormat: Assembly metadata key '{0}' produces the duplicate member name '{1}',
+        Category: SlusserLabs.AssemblyInfo,
+        DefaultSeverity: Error,
+        IsEnabledByDefault: true
+      }
+    },
+    {
+      Message: Assembly metadata key 'Repository.Url' produces the duplicate member name 'Repository_Url',
+      Severity: Error,
+      Descriptor: {
+        Id: SLAI004,
+        Title: Assembly metadata name conflicts with a generated member,
+        MessageFormat: Assembly metadata key '{0}' produces the duplicate member name '{1}',
+        Category: SlusserLabs.AssemblyInfo,
+        DefaultSeverity: Error,
+        IsEnabledByDefault: true
+      }
+    }
+  ]
+}
