@@ -7,21 +7,22 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <LangVersion>latest</LangVersion>
-
+    <Deterministic>true</Deterministic>
     <IsRoslynComponent>true</IsRoslynComponent>
     <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
-
+  </PropertyGroup>
+  
+  <PropertyGroup>
     <IsPackable>true</IsPackable>
     <PackageId>SlusserLabs.AssemblyInfo</PackageId>
     <Authors>Jacob Slusser</Authors>
-    <Copyright>SlusserLabs, Jacob Slusser</Copyright>
+    <Copyright>SlusserLabs, Jacob Slusser, and/or affiliate. All rights reserved.</Copyright>
     <Description>Generates reflection-free constants for assembly attributes and metadata.</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/SlusserLabs/AssemblyInfo.git</RepositoryUrl>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
-    <Deterministic>true</Deterministic>
     <ContinuousIntegrationBuild Condition="'$(CI)' == 'true'">true</ContinuousIntegrationBuild>
     <DebugType>portable</DebugType>
     <IncludeSymbols>true</IncludeSymbols>
@@ -35,12 +36,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <AdditionalFiles Include="AnalyzerReleases.Shipped.md" />
-    <AdditionalFiles Include="AnalyzerReleases.Unshipped.md" />
+    <ProjectReference Include="../AssemblyInfo.Attributes/AssemblyInfo.Attributes.csproj" PrivateAssets="all" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../AssemblyInfo.Attributes/AssemblyInfo.Attributes.csproj" PrivateAssets="all" />
+    <AdditionalFiles Include="AnalyzerReleases.Shipped.md" />
+    <AdditionalFiles Include="AnalyzerReleases.Unshipped.md" />
   </ItemGroup>
 
   <ItemGroup>

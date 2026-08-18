@@ -115,8 +115,6 @@ internal sealed record AssemblyInfoData
         }
     }
 
-    private static string? GetString(AttributeData attribute, int index)
-    {
-        return attribute.ConstructorArguments.Length > index ? attribute.ConstructorArguments[index].Value as string : default;
-    }
+    private static string? GetString(AttributeData attribute, int index) =>
+        attribute.ConstructorArguments.Length > index ? attribute.ConstructorArguments[index].Value as string : default;
 }

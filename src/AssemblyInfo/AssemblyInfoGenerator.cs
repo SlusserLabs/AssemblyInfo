@@ -1,6 +1,5 @@
 using System.Globalization;
 using System.Text;
-
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -32,6 +31,7 @@ public sealed class AssemblyInfoGenerator : IIncrementalGenerator
 
     private static bool IsTargetDeclaration(SyntaxNode node)
     {
+        // Only class and non-struct records
         return node switch
         {
             ClassDeclarationSyntax => true,
@@ -47,9 +47,9 @@ public sealed class AssemblyInfoGenerator : IIncrementalGenerator
         var options = GetOptions(context.Attributes[0]);
         var declarations = new List<string>();
         var diagnostics = new List<StringPair>();
+
         // Rebuild the containing type chain so nested targets can be reopened in generated code
         var syntaxDeclarations = targetDeclaration.AncestorsAndSelf().OfType<TypeDeclarationSyntax>().Reverse().ToArray();
-
         for (var index = 0; index < syntaxDeclarations.Length; index++)
         {
             var declaration = syntaxDeclarations[index];
@@ -78,7 +78,6 @@ public sealed class AssemblyInfoGenerator : IIncrementalGenerator
         }
 
         var undefinedOptions = (int)options & ~_allOptions;
-
         if (undefinedOptions != 0)
         {
             diagnostics.Add(new StringPair(DiagnosticDescriptors.UndefinedOptionsId, undefinedOptions.ToString("X", CultureInfo.InvariantCulture)));
@@ -110,8 +109,8 @@ public sealed class AssemblyInfoGenerator : IIncrementalGenerator
 
     private static bool IsSupportedDeclaration(TypeDeclarationSyntax declaration)
     {
-        return declaration is ClassDeclarationSyntax ||
-            declaration is RecordDeclarationSyntax record && !record.ClassOrStructKeyword.IsKind(SyntaxKind.StructKeyword);
+        return declaration is ClassDeclarationSyntax
+            || (declaration is RecordDeclarationSyntax record && !record.ClassOrStructKeyword.IsKind(SyntaxKind.StructKeyword));
     }
 
     private static string CreateTypeDeclaration(INamedTypeSymbol symbol)
@@ -170,9 +169,9 @@ public sealed class AssemblyInfoGenerator : IIncrementalGenerator
     private static string CreateHintName(string typeName)
     {
         var name = new StringBuilder(typeName.Length);
+
         // The stable hash keeps otherwise similar sanitized type names from sharing a hint name
         uint hash = 2166136261;
-
         foreach (var character in typeName)
         {
             name.Append(SyntaxFacts.IsIdentifierPartCharacter(character) ? character : '_');

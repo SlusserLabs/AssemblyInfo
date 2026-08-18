@@ -107,13 +107,13 @@ internal static class EmbeddedSources
 
     private static void AppendConstant(IndentedTextWriter writer, GenerateAssemblyInfoOptions options, GenerateAssemblyInfoOptions option, string name, string? value)
     {
-        if ((options & option) == 0)
+        if ((options & option) == 0 || value is null)
         {
             return;
         }
 
-        var literal = value is null ? "null" : SymbolDisplay.FormatLiteral(value, quote: true);
-        writer.WriteLine($"public const global::System.String? {name} = {literal};");
+        var literal = SymbolDisplay.FormatLiteral(value, quote: true);
+        writer.WriteLine($"public const global::System.String {name} = {literal};");
     }
 
     private static void AppendMetadata(IndentedTextWriter writer, GenerateAssemblyInfoOptions options, EquatableArray<StringPair> metadata)

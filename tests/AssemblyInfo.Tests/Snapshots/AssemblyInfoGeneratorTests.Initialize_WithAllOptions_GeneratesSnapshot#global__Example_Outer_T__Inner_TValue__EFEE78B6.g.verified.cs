@@ -11,15 +11,15 @@ public partial class Outer<T>
     [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute]
     public partial class Inner<TValue>
     {
-        public const global::System.String? Configuration = "Release";
-        public const global::System.String? Company = "SlusserLabs";
-        public const global::System.String? AssemblyTitle = "AssemblyInfo Tests";
-        public const global::System.String? Description = "Snapshot tests";
-        public const global::System.String? Product = "AssemblyInfo";
-        public const global::System.String? Copyright = "SlusserLabs, Jacob Slusser";
-        public const global::System.String? AssemblyVersion = "1.2.3.4";
-        public const global::System.String? InformationalVersion = "1.2.3+abcdef";
-        public const global::System.String? FileVersion = "1.2.3.4";
+        public const global::System.String Configuration = "Release";
+        public const global::System.String Company = "SlusserLabs";
+        public const global::System.String AssemblyTitle = "AssemblyInfo Tests";
+        public const global::System.String Description = "Snapshot tests";
+        public const global::System.String Product = "AssemblyInfo";
+        public const global::System.String Copyright = "SlusserLabs, Jacob Slusser";
+        public const global::System.String AssemblyVersion = "1.2.3.4";
+        public const global::System.String InformationalVersion = "1.2.3+abcdef";
+        public const global::System.String FileVersion = "1.2.3.4";
         public const global::System.String BuildDate = "2026-08-17";
         public const global::System.String Repository_Url = "https://example.test/repository";
     }

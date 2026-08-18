@@ -110,7 +110,7 @@
 # XML Documentation
 
 - Add `/// <summary>` documentation to every public type and member; keep comments informative and concise, not generic. XML documentation is never required in test projects
-- Do not generate XML documentation comments for private or internal types and members
+- Do not generate XML documentation comments for `private` or `internal` types and members
 - Place `<summary>` and `</summary>` on their own lines — never inline:
 
   ```cs

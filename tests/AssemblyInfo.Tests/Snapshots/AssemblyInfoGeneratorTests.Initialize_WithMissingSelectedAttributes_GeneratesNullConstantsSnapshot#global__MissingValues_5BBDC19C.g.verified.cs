@@ -7,6 +7,4 @@
 [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute]
 public partial class MissingValues
 {
-    public const global::System.String? AssemblyTitle = null;
-    public const global::System.String? Description = null;
 }

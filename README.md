@@ -1,8 +1,8 @@
 # AssemblyInfo
 
-AssemblyInfo is an incremental `C#` source generator that exposes assembly attributes and custom assembly metadata through generated constants. The values are captured at compile time and require no runtime reflection.
+AssemblyInfo is a source generator that exposes assembly attributes and custom assembly metadata through generated constants. The values are captured at compile time and require no runtime reflection, making it suitable for AOT.
 
-The project is inspired by [ThisAssembly](https://github.com/devlooped/ThisAssembly).
+> This project exists to provide access to assembly information without the need for reflection. If your build target supports reflection, you can still use this project but it would be for its convenience only.
 
 ## Installation
 
@@ -14,32 +14,51 @@ dotnet add package SlusserLabs.AssemblyInfo
 
 ## Usage
 
-Mark a partial `class` or record class as the destination for generated metadata:
+Mark a partial `class` or `record` as the destination for generated metadata using the `GenerateAssemblyInfo` attribute:
 
 ```csharp
 using SlusserLabs.AssemblyInfo;
 
 [GenerateAssemblyInfo]
-public static partial class ThisAssembly;
+public static partial class AssemblyInfo;
 ```
 
-The default generates every supported value. You can select only the values your application needs:
-
-```csharp
-using SlusserLabs.AssemblyInfo;
-
-[GenerateAssemblyInfo(GenerateAssemblyInfoOptions.AssemblyTitle | GenerateAssemblyInfoOptions.AssemblyVersion)]
-public static partial class ThisAssembly;
+The following `.csproj` project properties are supported as outlined in [MSBuild documentation](https://learn.microsoft.com/en-us/dotnet/standard/assembly/set-attributes-project-file):
+```xml
+<PropertyGroup>
+  <Company></Company>
+  <Configuration></Configuration>
+  <Copyright></Copyright>
+  <Description></Description>
+  <FileVersion></FileVersion>
+  <InformationalVersion></InformationalVersion>
+  <Product></Product>
+  <AssemblyTitle></AssemblyTitle>
+  <AssemblyVersion></AssemblyVersion>
+</PropertyGroup>
 ```
 
-The generated constants use the corresponding .NET SDK property names:
-
-```csharp
-Console.WriteLine(ThisAssembly.AssemblyTitle);
-Console.WriteLine(ThisAssembly.AssemblyVersion);
+The result is a generated class with the following `public const` fields:
+```cs
+public static partial class AssemblyInfo
+{
+  public const string Configuration;
+  public const string Company;
+  public const string AssemblyTitle;
+  public const string Description;
+  public const string Product;
+  public const string Copyright;
+  public const string AssemblyVersion;
+  public const string InformationalVersion;
+  public const string FileVersion;
+}
 ```
 
-Custom `AssemblyMetadataAttribute` values are generated directly on the target type. For example, this project configuration:
+That's it!
+
+### AssemblyMetadata
+
+Custom `AssemblyMetadataAttribute` values are also supported and makes it easy to embed [arbitrary strings](https://learn.microsoft.com/en-us/dotnet/standard/assembly/set-attributes-project-file#set-arbitrary-attributes). For example, this project configuration:
 
 ```xml
 <ItemGroup>
@@ -50,6 +69,31 @@ Custom `AssemblyMetadataAttribute` values are generated directly on the target t
 </ItemGroup>
 ```
 
-generates a `ThisAssembly.BuildDate` constant. Metadata keys are converted to valid `C#` identifiers. The generator reports an error if a converted name conflicts with another metadata key or a standard generated constant.
+generates a `BuildDate` constant.
 
-Attributed targets and all containing types must be partial. Top-level, nested, generic, and non-generic classes and record classes are supported.
+I would recommend always using key names that are also valid C# identifiers because they will be generated as the name of a `const`, however, the source generator will attempt to make them valid C# identifiers by replacing invalid characters if they are not otherwise. The generator reports an error if a converted name conflicts with another metadata key or a standard generated constant.
+
+### Advanced Options
+
+The `GenerateAssemblyInfo` attribute accepts an optional `GenerateAssemblyInfoOptions` flags enum if you want want more control over which assembly metadata you want included. For example, if you wanted to put assembly attributes in one class and metadata in another to avoid naming collisions, you might do that like this:
+
+```cs
+using SlusserLabs.AssemblyInfo;
+
+// Contains only title, product, version, etc...
+[GenerateAssemblyInfo(GenerateAssemblyInfoOptions.AllAssemblyAttributes)]
+public static partial class AssemblyInfo
+{
+    // Contains only metadata key-value pairs
+    [GenerateAssemblyInfo(GenerateAssemblyInfoOptions.AssemblyMetadata)]
+    public static partial class Metadata;
+}
+```
+
+## AI Disclosure
+
+This project was built with the help of Codex 5.6 Sol for code generation. As with any tool I use for coding, I am fully responsible for the end result and only put forward this project with full confidence I have reviewed every line and it meets my expectations wether that line of code was fully AI generated, AI assisted, or entirely from my own Muppet fingers on the keyboard.
+
+## Acknowledgements
+
+This project is inspired by [ThisAssembly](https://github.com/devlooped/ThisAssembly). I wholeheartedly recommend that project if it is more to your liking; I just wanted slightly different ergonomics.

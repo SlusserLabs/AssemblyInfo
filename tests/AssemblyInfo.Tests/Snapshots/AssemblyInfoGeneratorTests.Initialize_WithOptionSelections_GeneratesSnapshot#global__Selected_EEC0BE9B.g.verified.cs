@@ -7,6 +7,7 @@
 [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute]
 public partial class Selected
 {
-    public const global::System.String? Company = "SlusserLabs";
-    public const global::System.String? AssemblyVersion = "1.2.3.4";
+    public const global::System.String Company = "SlusserLabs";
+    public const global::System.String Description = "";
+    public const global::System.String AssemblyVersion = "1.2.3.4";
 }

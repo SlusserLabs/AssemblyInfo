@@ -7,13 +7,8 @@
 [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute]
 public partial class AssemblyAttributesOnly
 {
-    public const global::System.String? Configuration = null;
-    public const global::System.String? Company = "SlusserLabs";
-    public const global::System.String? AssemblyTitle = "AssemblyInfo Tests";
-    public const global::System.String? Description = null;
-    public const global::System.String? Product = null;
-    public const global::System.String? Copyright = null;
-    public const global::System.String? AssemblyVersion = "1.2.3.4";
-    public const global::System.String? InformationalVersion = null;
-    public const global::System.String? FileVersion = null;
+    public const global::System.String Company = "SlusserLabs";
+    public const global::System.String AssemblyTitle = "AssemblyInfo Tests";
+    public const global::System.String Description = "";
+    public const global::System.String AssemblyVersion = "1.2.3.4";
 }

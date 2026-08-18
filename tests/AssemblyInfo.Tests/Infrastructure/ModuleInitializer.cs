@@ -9,7 +9,7 @@ public static class ModuleInitializer
     [ModuleInitializer]
     public static void Init()
     {
-        Verifier.UseProjectRelativeDirectory("Snapshots");
+        UseProjectRelativeDirectory("Snapshots");
         VerifySourceGenerators.Initialize();
     }
 }

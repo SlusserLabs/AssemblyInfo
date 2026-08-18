@@ -53,11 +53,12 @@ public sealed class AssemblyInfoGeneratorTests
 
             [assembly: AssemblyCompany("SlusserLabs")]
             [assembly: AssemblyTitle("AssemblyInfo Tests")]
+            [assembly: AssemblyDescription("")]
             [assembly: AssemblyVersion("1.2.3.4")]
             [assembly: AssemblyMetadata("BuildDate", "2026-08-17")]
             [assembly: AssemblyMetadata("Commit", "abcdef")]
 
-            [GenerateAssemblyInfo(GenerateAssemblyInfoOptions.AssemblyCompany | GenerateAssemblyInfoOptions.AssemblyVersion)]
+            [GenerateAssemblyInfo(GenerateAssemblyInfoOptions.AssemblyCompany | GenerateAssemblyInfoOptions.AssemblyDescription | GenerateAssemblyInfoOptions.AssemblyVersion)]
             public partial class Selected;
 
             [GenerateAssemblyInfo(GenerateAssemblyInfoOptions.AllAssemblyAttributes)]
