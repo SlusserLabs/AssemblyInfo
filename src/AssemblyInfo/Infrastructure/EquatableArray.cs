@@ -1,18 +1,20 @@
-namespace SlusserLabs.AssemblyInfo;
+namespace SlusserLabs.AssemblyInfo.Infrastructure;
 
-internal readonly struct EquatableArray<T> : IEquatable<EquatableArray<T>>
-    where T : IEquatable<T>
+// This follows the suggestion by Andrew Lock to use a custom type in place of ImmutableArray for item equality support.
+// See: https://andrewlock.net/creating-a-source-generator-part-9-avoiding-performance-pitfalls-in-incremental-generators/
+// See: https://github.com/CommunityToolkit/dotnet/blob/main/src/CommunityToolkit.Mvvm.SourceGenerators/Helpers/EquatableArray%7BT%7D.cs
+internal readonly struct EquatableArray<T> : IEquatable<EquatableArray<T>> where T : IEquatable<T>
 {
     private readonly T[]? _items;
 
-    internal EquatableArray(T[] items)
+    public EquatableArray(T[] items)
     {
         _items = items;
     }
 
-    internal int Count => _items?.Length ?? 0;
+    public int Count => _items?.Length ?? 0;
 
-    internal T this[int index] => _items![index];
+    public T this[int index] => _items![index];
 
     public bool Equals(EquatableArray<T> other)
     {

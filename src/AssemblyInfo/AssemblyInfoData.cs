@@ -1,6 +1,7 @@
 using System.Reflection;
 
 using Microsoft.CodeAnalysis;
+using SlusserLabs.AssemblyInfo.Infrastructure;
 
 namespace SlusserLabs.AssemblyInfo;
 
@@ -17,51 +18,27 @@ internal sealed record AssemblyInfoData
     private const string _assemblyFileVersionAttributeName = "System.Reflection." + nameof(AssemblyFileVersionAttribute);
     private const string _assemblyMetadataAttributeName = "System.Reflection." + nameof(AssemblyMetadataAttribute);
 
-    private AssemblyInfoData(
-        string? configuration,
-        string? company,
-        string? title,
-        string? description,
-        string? product,
-        string? copyright,
-        string? version,
-        string? informationalVersion,
-        string? fileVersion,
-        EquatableArray<AssemblyMetadataEntry> metadata)
-    {
-        Configuration = configuration;
-        Company = company;
-        Title = title;
-        Description = description;
-        Product = product;
-        Copyright = copyright;
-        Version = version;
-        InformationalVersion = informationalVersion;
-        FileVersion = fileVersion;
-        Metadata = metadata;
-    }
+    public string? Configuration { get; set; }
 
-    internal string? Configuration { get; }
+    public string? Company { get; set; }
 
-    internal string? Company { get; }
+    public string? Title { get; set; }
 
-    internal string? Title { get; }
+    public string? Description { get; set; }
 
-    internal string? Description { get; }
+    public string? Product { get; set; }
 
-    internal string? Product { get; }
+    public string? Copyright { get; set; }
 
-    internal string? Copyright { get; }
+    public string? Version { get; set; }
 
-    internal string? Version { get; }
+    public string? InformationalVersion { get; set; }
 
-    internal string? InformationalVersion { get; }
+    public string? FileVersion { get; set; }
 
-    internal string? FileVersion { get; }
+    public EquatableArray<StringPair> Metadata { get; set; }
 
-    internal EquatableArray<AssemblyMetadataEntry> Metadata { get; }
-
-    internal static AssemblyInfoData Create(Compilation compilation)
+    public static AssemblyInfoData Create(Compilation compilation)
     {
         string? configuration = default;
         string? company = default;
@@ -72,7 +49,7 @@ internal sealed record AssemblyInfoData
         string? version = default;
         string? informationalVersion = default;
         string? fileVersion = default;
-        var metadata = new List<AssemblyMetadataEntry>();
+        var metadata = new List<StringPair>();
 
         // SDK-generated assembly information is already available on the compilation
         foreach (var attribute in compilation.Assembly.GetAttributes())
@@ -112,27 +89,29 @@ internal sealed record AssemblyInfoData
             }
         }
 
-        return new AssemblyInfoData(
-            configuration,
-            company,
-            title,
-            description,
-            product,
-            copyright,
-            version,
-            informationalVersion,
-            fileVersion,
-            new EquatableArray<AssemblyMetadataEntry>(metadata.ToArray()));
+        return new AssemblyInfoData
+        {
+            Configuration = configuration,
+            Company = company,
+            Title = title,
+            Description = description,
+            Product = product,
+            Copyright = copyright,
+            Version = version,
+            InformationalVersion = informationalVersion,
+            FileVersion = fileVersion,
+            Metadata = new EquatableArray<StringPair>(metadata.ToArray())
+        };
     }
 
-    private static void AddMetadata(AttributeData attribute, List<AssemblyMetadataEntry> metadata)
+    private static void AddMetadata(AttributeData attribute, List<StringPair> metadata)
     {
         var key = GetString(attribute, 0);
         var value = GetString(attribute, 1);
 
         if (key is not null && value is not null)
         {
-            metadata.Add(new AssemblyMetadataEntry(key, value));
+            metadata.Add(new StringPair(key, value));
         }
     }
 
@@ -140,5 +119,4 @@ internal sealed record AssemblyInfoData
     {
         return attribute.ConstructorArguments.Length > index ? attribute.ConstructorArguments[index].Value as string : default;
     }
-
 }

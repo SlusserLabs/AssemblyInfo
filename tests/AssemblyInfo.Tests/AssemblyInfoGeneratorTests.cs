@@ -1,10 +1,13 @@
+using SlusserLabs.AssemblyInfo.Tests.Infrastructure;
+
 namespace SlusserLabs.AssemblyInfo.Tests;
 
 public sealed class AssemblyInfoGeneratorTests
 {
     [Test]
-    public async Task Initialize_WithAllAttributesAndTargetShapes_GeneratesSnapshotAsync(CancellationToken cancellationToken = default)
+    public async Task Initialize_WithAllOptions_GeneratesSnapshot(CancellationToken cancellationToken = default)
     {
+        // Arrange
         const string source = """
             using System.Reflection;
             using SlusserLabs.AssemblyInfo;
@@ -23,26 +26,27 @@ public sealed class AssemblyInfoGeneratorTests
 
             namespace Example;
 
-            [GeneratedAssemblyInfo]
+            [GenerateAssemblyInfo]
             public static partial class ThisAssembly;
 
-            [GeneratedAssemblyInfo]
+            [GenerateAssemblyInfo]
             public partial record AssemblyRecord(string Value);
 
-            public partial class Outer<T>
-                where T : class
+            public partial class Outer<T> where T : class
             {
-                [GeneratedAssemblyInfo]
+                [GenerateAssemblyInfo]
                 public partial class Inner<TValue>;
             }
             """;
 
+        // Act & Assert
         await GeneratorTestHelper.VerifyAsync(source, cancellationToken);
     }
 
     [Test]
-    public async Task Initialize_WithOptionSelections_GeneratesSnapshotAsync(CancellationToken cancellationToken = default)
+    public async Task Initialize_WithOptionSelections_GeneratesSnapshot(CancellationToken cancellationToken = default)
     {
+        // Arrange
         const string source = """
             using System.Reflection;
             using SlusserLabs.AssemblyInfo;
@@ -53,63 +57,69 @@ public sealed class AssemblyInfoGeneratorTests
             [assembly: AssemblyMetadata("BuildDate", "2026-08-17")]
             [assembly: AssemblyMetadata("Commit", "abcdef")]
 
-            [GeneratedAssemblyInfo(AssemblyInfoOptions.AssemblyCompany | AssemblyInfoOptions.AssemblyVersion)]
+            [GenerateAssemblyInfo(GenerateAssemblyInfoOptions.AssemblyCompany | GenerateAssemblyInfoOptions.AssemblyVersion)]
             public partial class Selected;
 
-            [GeneratedAssemblyInfo(AssemblyInfoOptions.AllAssemblyAttributes)]
+            [GenerateAssemblyInfo(GenerateAssemblyInfoOptions.AllAssemblyAttributes)]
             public partial class AssemblyAttributesOnly;
 
-            [GeneratedAssemblyInfo(AssemblyInfoOptions.AssemblyMetadata)]
+            [GenerateAssemblyInfo(GenerateAssemblyInfoOptions.AssemblyMetadata)]
             public partial class MetadataOnly;
 
-            [GeneratedAssemblyInfo(AssemblyInfoOptions.None)]
+            [GenerateAssemblyInfo(GenerateAssemblyInfoOptions.None)]
             public partial class Empty;
             """;
 
+        // Act & Assert
         await GeneratorTestHelper.VerifyAsync(source, cancellationToken);
     }
 
     [Test]
-    public async Task Initialize_WithMissingSelectedAttributes_GeneratesNullConstantsSnapshotAsync(CancellationToken cancellationToken = default)
+    public async Task Initialize_WithMissingSelectedAttributes_GeneratesNullConstantsSnapshot(CancellationToken cancellationToken = default)
     {
+        // Arrange
         const string source = """
             using SlusserLabs.AssemblyInfo;
 
-            [GeneratedAssemblyInfo(AssemblyInfoOptions.AssemblyTitle | AssemblyInfoOptions.AssemblyDescription)]
+            [GenerateAssemblyInfo(GenerateAssemblyInfoOptions.AssemblyTitle | GenerateAssemblyInfoOptions.AssemblyDescription)]
             public partial class MissingValues;
             """;
 
+        // Act & Assert
         await GeneratorTestHelper.VerifyAsync(source, cancellationToken);
     }
 
     [Test]
-    public async Task Initialize_WithInvalidTargetsAndOptions_ReportsDiagnosticsSnapshotAsync(CancellationToken cancellationToken = default)
+    public async Task Initialize_WithInvalidOptions_ReportsDiagnosticsSnapshot(CancellationToken cancellationToken = default)
     {
+        // Arrange
         const string source = """
             using SlusserLabs.AssemblyInfo;
 
-            [GeneratedAssemblyInfo]
+            [GenerateAssemblyInfo]
             public class NotPartial;
 
             public class Outer
             {
-                [GeneratedAssemblyInfo]
+                [GenerateAssemblyInfo]
                 public partial class Nested;
             }
 
-            [GeneratedAssemblyInfo]
+            [GenerateAssemblyInfo]
             file partial class FileLocal;
 
-            [GeneratedAssemblyInfo((AssemblyInfoOptions)1024)]
+            [GenerateAssemblyInfo((GenerateAssemblyInfoOptions)1024)]
             public partial class UnknownOptions;
             """;
 
+        // Act & Assert
         await GeneratorTestHelper.VerifyAsync(source, cancellationToken);
     }
 
     [Test]
-    public async Task Initialize_WithMetadataCollisions_ReportsDiagnosticsSnapshotAsync(CancellationToken cancellationToken = default)
+    public async Task Initialize_WithMetadataCollisions_ReportsDiagnosticsSnapshot(CancellationToken cancellationToken = default)
     {
+        // Arrange
         const string source = """
             using System.Reflection;
             using SlusserLabs.AssemblyInfo;
@@ -118,10 +128,11 @@ public sealed class AssemblyInfoGeneratorTests
             [assembly: AssemblyMetadata("Repository-Url", "first")]
             [assembly: AssemblyMetadata("Repository.Url", "second")]
 
-            [GeneratedAssemblyInfo(AssemblyInfoOptions.AssemblyMetadata)]
+            [GenerateAssemblyInfo(GenerateAssemblyInfoOptions.AssemblyMetadata)]
             public partial class Conflicts;
             """;
 
+        // Act & Assert
         await GeneratorTestHelper.VerifyAsync(source, cancellationToken);
     }
 }

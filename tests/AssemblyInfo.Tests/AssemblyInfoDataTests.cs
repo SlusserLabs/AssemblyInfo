@@ -1,15 +1,18 @@
+using SlusserLabs.AssemblyInfo.Tests.Infrastructure;
+
 namespace SlusserLabs.AssemblyInfo.Tests;
 
 public sealed class AssemblyInfoDataTests
 {
     [Test]
-    public async Task Create_WithAssemblyAttributes_ReturnsAllValuesAsync(CancellationToken cancellationToken = default)
+    public async Task Create_WithAssemblyAttributes_ReturnsAllValues(CancellationToken cancellationToken = default)
     {
+        // Arrange
         const string source = """
             using System.Reflection;
 
             [assembly: AssemblyConfiguration("Release")]
-            [assembly: AssemblyCompany("Slusser Labs")]
+            [assembly: AssemblyCompany("SlusserLabs")]
             [assembly: AssemblyTitle("AssemblyInfo Tests")]
             [assembly: AssemblyDescription("Test description")]
             [assembly: AssemblyProduct("AssemblyInfo")]
@@ -20,13 +23,16 @@ public sealed class AssemblyInfoDataTests
             [assembly: AssemblyMetadata("RepositoryUrl", "https://example.test/repository")]
             [assembly: AssemblyMetadata("Commit", "abcdef")]
             """;
+
         var compilation = GeneratorTestHelper.CreateCompilation(source, cancellationToken);
 
+        // Act
         var result = AssemblyInfoData.Create(compilation);
         var equivalentResult = AssemblyInfoData.Create(GeneratorTestHelper.CreateCompilation(source, cancellationToken));
 
+        // Assert
         await Assert.That(result.Configuration).IsEqualTo("Release");
-        await Assert.That(result.Company).IsEqualTo("Slusser Labs");
+        await Assert.That(result.Company).IsEqualTo("SlusserLabs");
         await Assert.That(result.Title).IsEqualTo("AssemblyInfo Tests");
         await Assert.That(result.Description).IsEqualTo("Test description");
         await Assert.That(result.Product).IsEqualTo("AssemblyInfo");

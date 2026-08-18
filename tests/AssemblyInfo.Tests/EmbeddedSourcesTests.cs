@@ -7,12 +7,12 @@ public sealed class EmbeddedSourcesTests
     [Arguments("class", "@class")]
     [Arguments("1st", "_1st")]
     [Arguments("", "_")]
-    public async Task CreateIdentifier_WithMetadataKey_ReturnsValidIdentifierAsync(string key, string expected, CancellationToken cancellationToken = default)
+    public async Task CreateIdentifier_WithMetadataKey_ReturnsValidIdentifier(string key, string expected, CancellationToken cancellationToken = default)
     {
-        cancellationToken.ThrowIfCancellationRequested();
-
+        // Act
         var result = EmbeddedSources.CreateIdentifier(key);
 
+        // Assert
         await Assert.That(result).IsEqualTo(expected);
     }
 }

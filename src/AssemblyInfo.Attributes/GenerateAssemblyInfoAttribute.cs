@@ -11,13 +11,13 @@ namespace SlusserLabs.AssemblyInfo;
 /// </summary>
 [AttributeUsage(AttributeTargets.Class, Inherited = false, AllowMultiple = false)]
 [Conditional("SLUSSERLABS_ASSEMBLYINFO_USAGES")]
-public sealed class GeneratedAssemblyInfoAttribute : Attribute
+public sealed class GenerateAssemblyInfoAttribute : Attribute
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="GeneratedAssemblyInfoAttribute" /> class.
+    /// Initializes a new instance of the <see cref="GenerateAssemblyInfoAttribute" /> class.
     /// </summary>
     /// <param name="options">The assembly information to generate. The default is <c>All</c>.</param>
-    public GeneratedAssemblyInfoAttribute(AssemblyInfoOptions options = AssemblyInfoOptions.All)
+    public GenerateAssemblyInfoAttribute(GenerateAssemblyInfoOptions options = GenerateAssemblyInfoOptions.All)
     {
         Options = options;
     }
@@ -25,5 +25,5 @@ public sealed class GeneratedAssemblyInfoAttribute : Attribute
     /// <summary>
     /// Gets the assembly information to generate.
     /// </summary>
-    public AssemblyInfoOptions Options { get; }
+    public GenerateAssemblyInfoOptions Options { get; }
 }

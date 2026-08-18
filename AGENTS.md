@@ -70,7 +70,7 @@
 
 - Use PascalCase for classes, methods, properties, and public fields
 - Use `_camelCase` for all private fields, including `const`, `readonly`, `static`, and `static readonly` fields (e.g., `_fieldName`). Do not use PascalCase for private constants.
-- Methods returning `Task` or `ValueTask` should have the `Async` suffix, except when implementing framework-defined signatures
+- Methods returning `Task` or `ValueTask` should have the `Async` suffix, except unit test methods and framework-defined signatures; unit test names follow `{MethodName}_{Scenario}_{Outcome}`
 
 ## Asynchronous Programming
 
@@ -152,7 +152,7 @@
 ## Structure & Organization
 
 - Consolidate all argument-validation exception tests (null inputs, empty strings, mutually exclusive options) into a single test method per class; do not create a separate test for each invalid argument scenario
-- Follow the arrange-act-assert pattern; add section comments only when they improve clarity
+- Follow the arrange-act-assert pattern; include `// Arrange`, `// Act`, and `// Assert` section comments unless it makes sense to omit them
 - Test projects mirror the namespace and folder structure of the code under test (e.g., `Services/MyClass.cs` → `Services/MyClassTests.cs`)
 - Use static helper methods for repetitive setup; test methods do not share state or mock instances between discrete tests
 - Properly dispose `IDisposable` artifacts with `using` statements in both test and helper methods

@@ -19,7 +19,7 @@ Mark a partial `class` or record class as the destination for generated metadata
 ```csharp
 using SlusserLabs.AssemblyInfo;
 
-[GeneratedAssemblyInfo]
+[GenerateAssemblyInfo]
 public static partial class ThisAssembly;
 ```
 
@@ -28,7 +28,7 @@ The default generates every supported value. You can select only the values your
 ```csharp
 using SlusserLabs.AssemblyInfo;
 
-[GeneratedAssemblyInfo(AssemblyInfoOptions.AssemblyTitle | AssemblyInfoOptions.AssemblyVersion)]
+[GenerateAssemblyInfo(GenerateAssemblyInfoOptions.AssemblyTitle | GenerateAssemblyInfoOptions.AssemblyVersion)]
 public static partial class ThisAssembly;
 ```
 

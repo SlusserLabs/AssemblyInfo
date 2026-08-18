@@ -1,32 +1,18 @@
+using SlusserLabs.AssemblyInfo.Infrastructure;
+
 namespace SlusserLabs.AssemblyInfo;
 
-internal readonly record struct AssemblyInfoTarget
+internal record struct AssemblyInfoTarget
 {
-    internal AssemblyInfoTarget(
-        string? namespaceName,
-        EquatableArray<string> typeDeclarations,
-        string displayName,
-        string hintName,
-        AssemblyInfoOptions options,
-        EquatableArray<GeneratorDiagnostic> diagnostics)
-    {
-        NamespaceName = namespaceName;
-        TypeDeclarations = typeDeclarations;
-        DisplayName = displayName;
-        HintName = hintName;
-        Options = options;
-        Diagnostics = diagnostics;
-    }
+    public string? NamespaceName { get; set; }
 
-    internal string? NamespaceName { get; }
+    public EquatableArray<string> TypeDeclarations { get; set; }
 
-    internal EquatableArray<string> TypeDeclarations { get; }
+    public string DisplayName { get; set; }
 
-    internal string DisplayName { get; }
+    public string HintName { get; set; }
 
-    internal string HintName { get; }
+    public GenerateAssemblyInfoOptions Options { get; set; }
 
-    internal AssemblyInfoOptions Options { get; }
-
-    internal EquatableArray<GeneratorDiagnostic> Diagnostics { get; }
+    public EquatableArray<StringPair> Diagnostics { get; set; }
 }

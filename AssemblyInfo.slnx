@@ -1,5 +1,15 @@
 <Solution>
-  <Project Path="src/AssemblyInfo/AssemblyInfo.csproj" />
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path=".gitattributes" />
+    <File Path=".gitignore" />
+    <File Path="AGENTS.md" />
+    <File Path="exclusion.dic" />
+    <File Path="global.json" />
+    <File Path="LICENSE" />
+    <File Path="README.md" />
+  </Folder>
   <Project Path="src/AssemblyInfo.Attributes/AssemblyInfo.Attributes.csproj" />
+  <Project Path="src/AssemblyInfo/AssemblyInfo.csproj" />
   <Project Path="tests/AssemblyInfo.Tests/AssemblyInfo.Tests.csproj" />
 </Solution>
