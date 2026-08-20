@@ -19,6 +19,8 @@
     <Copyright>SlusserLabs, Jacob Slusser, and/or affiliate. All rights reserved.</Copyright>
     <Description>Generates reflection-free constants for assembly attributes and metadata.</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/SlusserLabs/AssemblyInfo</PackageProjectUrl>
+    <PackageTags>assemblyinfo assembly-metadata assembly-attributes source-generator incremental-generator roslyn reflection-free aot msbuild</PackageTags>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/SlusserLabs/AssemblyInfo.git</RepositoryUrl>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
@@ -27,7 +29,7 @@
     <DebugType>portable</DebugType>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <BuildOutputTargetFolder>analyzers/dotnet/cs</BuildOutputTargetFolder>
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
@@ -45,10 +47,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="$(OutputPath)$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
-    <None Include="$(OutputPath)$(AssemblyName).pdb" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
     <None Include="$(OutputPath)SlusserLabs.AssemblyInfo.Attributes.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
-    <None Include="$(OutputPath)SlusserLabs.AssemblyInfo.Attributes.pdb" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
     <None Include="$(OutputPath)SlusserLabs.AssemblyInfo.Attributes.dll" Pack="true" PackagePath="lib/netstandard2.0" Visible="true" />
     <None Include="../../README.md" Pack="true" PackagePath="/" Visible="false" />
     <None Include="../../LICENSE" Pack="true" PackagePath="/" Visible="false" />

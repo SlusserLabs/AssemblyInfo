@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <RootNamespace>SlusserLabs.AssemblyInfo.PackageTests</RootNamespace>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <IsPackable>false</IsPackable>
+    <AssemblyInfoPackageVersion Condition="'$(AssemblyInfoPackageVersion)' == ''">1.0.0</AssemblyInfoPackageVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="SlusserLabs.AssemblyInfo" Version="$(AssemblyInfoPackageVersion)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute">
+      <_Parameter1>BuildCommit</_Parameter1>
+      <_Parameter2>abc123</_Parameter2>
+    </AssemblyAttribute>
+  </ItemGroup>
+
+</Project>
