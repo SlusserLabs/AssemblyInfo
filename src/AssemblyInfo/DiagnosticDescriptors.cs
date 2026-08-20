@@ -36,8 +36,8 @@ internal static class DiagnosticDescriptors
 
     public static readonly DiagnosticDescriptor MetadataNameCollision = new(
         MetadataNameCollisionId,
-        "Assembly metadata name conflicts with a generated member",
-        "Assembly metadata key '{0}' produces the duplicate member name '{1}'",
+        "Assembly metadata name conflicts with a standard generated member",
+        "Assembly metadata key '{0}' produces the duplicate, standard member name '{1}'",
         "SlusserLabs.AssemblyInfo",
         DiagnosticSeverity.Error,
         isEnabledByDefault: true);

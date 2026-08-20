@@ -75,7 +75,7 @@ I would recommend always using key names that are also valid C# identifiers beca
 
 ### Advanced Options
 
-The `GenerateAssemblyInfo` attribute accepts an optional `GenerateAssemblyInfoOptions` flags enum if you want want more control over which assembly metadata you want included. For example, if you wanted to put assembly attributes in one class and metadata in another to avoid naming collisions, you might do that like this:
+The `GenerateAssemblyInfo` attribute accepts an optional `GenerateAssemblyInfoOptions` flags enum if you want want more control over which assembly metadata you want included. For example, if you wanted to put assembly attributes in one class and metadata in another to avoid naming collisions, you might do that like this (my usual preference):
 
 ```cs
 using SlusserLabs.AssemblyInfo;
