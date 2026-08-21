@@ -161,8 +161,8 @@ jobs:
           NUGET_API_KEY: ${{ steps.nuget-login.outputs.NUGET_API_KEY }}
         run: |
           set -euo pipefail
-          dotnet nuget push "${{ env.PACKAGE_OUTPUT }}"/*.nupkg --api-key "$NUGET_API_KEY" --source https://api.nuget.org/v3/index.json --skip-duplicate
-          dotnet nuget push "${{ env.PACKAGE_OUTPUT }}"/*.snupkg --api-key "$NUGET_API_KEY" --source https://api.nuget.org/v3/index.json --skip-duplicate
+          dotnet nuget push "${{ env.PACKAGE_OUTPUT }}"/*.nupkg --api-key "$NUGET_API_KEY" --source https://api.nuget.org/v3/index.json
+          dotnet nuget push "${{ env.PACKAGE_OUTPUT }}"/*.snupkg --api-key "$NUGET_API_KEY" --source https://api.nuget.org/v3/index.json
 
       - name: Upload packages to GitHub Release
         shell: bash
