@@ -29,6 +29,7 @@ Keep the `.nupkg` and `.snupkg` together in the same directory. Open the `.nupkg
 analyzers/dotnet/cs/netstandard2.0/SlusserLabs.AssemblyInfo.dll
 analyzers/dotnet/cs/netstandard2.0/SlusserLabs.AssemblyInfo.Attributes.dll
 ref/netstandard2.0/SlusserLabs.AssemblyInfo.Attributes.dll
+ref/netstandard2.0/SlusserLabs.AssemblyInfo.Attributes.xml
 ```
 
 The package should not contain a `lib` or `runtimes` DLL. Package Explorer reports green "No files found to validate" health results because it does not inspect assemblies in `analyzers` or `ref`.

@@ -10,6 +10,7 @@ namespace SlusserLabs.AssemblyInfo.PackageTests;
 internal static class PackageValidator
 {
     private const string _analyzerPath = "analyzers/dotnet/cs/netstandard2.0";
+    private const string _attributesDocumentationPath = "ref/netstandard2.0/SlusserLabs.AssemblyInfo.Attributes.xml";
 
     // Roslyn portable PDB custom debug information identifiers
     private static readonly Guid _compilerFlagsId = new("B5FEEC05-8CD0-4A83-96DA-466284BB4BD8");
@@ -34,6 +35,23 @@ internal static class PackageValidator
         // Every analyzer assembly must have a matching portable PDB with reproducible build metadata
         ValidateAssembly(package, symbolsPackage, $"{_analyzerPath}/SlusserLabs.AssemblyInfo.dll", repositoryCommit);
         ValidateAssembly(package, symbolsPackage, $"{_analyzerPath}/SlusserLabs.AssemblyInfo.Attributes.dll", repositoryCommit);
+        ValidateDocumentation(package);
+    }
+
+    private static void ValidateDocumentation(ZipArchive package)
+    {
+        var documentationBytes = ReadEntry(package, _attributesDocumentationPath);
+        using var stream = new MemoryStream(documentationBytes);
+        var document = XDocument.Load(stream);
+        var memberNames = document.Descendants("member")
+            .Select(member => member.Attribute("name")?.Value)
+            .ToHashSet(StringComparer.Ordinal);
+
+        if (!memberNames.Contains("T:SlusserLabs.AssemblyInfo.GenerateAssemblyInfoAttribute")
+            || !memberNames.Contains("T:SlusserLabs.AssemblyInfo.GenerateAssemblyInfoOptions"))
+        {
+            throw new InvalidDataException($"{_attributesDocumentationPath} does not contain the public API documentation.");
+        }
     }
 
     private static void ValidateAssembly(ZipArchive package, ZipArchive symbolsPackage, string assemblyPath, string repositoryCommit)

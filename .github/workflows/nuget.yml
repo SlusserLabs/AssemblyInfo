@@ -85,6 +85,7 @@ jobs:
           grep -Eq '^analyzers/dotnet/cs/(.*/)?SlusserLabs.AssemblyInfo.dll$' <<< "$package_contents"
           grep -Fxq 'analyzers/dotnet/cs/netstandard2.0/SlusserLabs.AssemblyInfo.Attributes.dll' <<< "$package_contents"
           grep -Fxq 'ref/netstandard2.0/SlusserLabs.AssemblyInfo.Attributes.dll' <<< "$package_contents"
+          grep -Fxq 'ref/netstandard2.0/SlusserLabs.AssemblyInfo.Attributes.xml' <<< "$package_contents"
           if grep -Eq '^(lib|runtimes)/.*\.dll$' <<< "$package_contents"; then
             echo 'The package must not contain runtime DLL assets.' >&2
             exit 1
