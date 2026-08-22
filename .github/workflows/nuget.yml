@@ -59,11 +59,11 @@ jobs:
             exit 1
           fi
           package_version=${RELEASE_TAG#v}
-          dotnet pack "${{ env.PACKAGE_PROJECT }}" --configuration Release --output "${{ env.PACKAGE_OUTPUT }}" --no-restore -p:PackageVersion="$package_version"
+          dotnet pack "${{ env.PACKAGE_PROJECT }}" --configuration Release --output "${{ env.PACKAGE_OUTPUT }}" --no-restore -p:Version="$package_version"
 
       - name: Pack integration-test package
         if: github.event_name == 'workflow_dispatch'
-        run: dotnet pack ${{ env.PACKAGE_PROJECT }} --configuration Release --output ${{ env.PACKAGE_OUTPUT }} --no-restore -p:PackageVersion=1.0.0-ci.${{ github.run_number }}
+        run: dotnet pack ${{ env.PACKAGE_PROJECT }} --configuration Release --output ${{ env.PACKAGE_OUTPUT }} --no-restore -p:VersionSuffix=ci.${{ github.run_number }}
 
       - name: Inspect package contents
         shell: bash
