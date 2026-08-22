@@ -208,24 +208,6 @@ public sealed class AssemblyInfoGenerator : IIncrementalGenerator
             hasErrors |= descriptor.DefaultSeverity == DiagnosticSeverity.Error;
         }
 
-        // Metadata lives beside the standard constants, so every standard name stays reserved
-        var metadataNames = new HashSet<string>(EmbeddedSources.StandardMemberNames, StringComparer.Ordinal);
-
-        if ((target.Options & GenerateAssemblyInfoOptions.AssemblyMetadata) != 0)
-        {
-            for (var index = 0; index < assemblyInfo.Metadata.Count; index++)
-            {
-                var metadata = assemblyInfo.Metadata[index];
-                var identifier = EmbeddedSources.CreateIdentifier(metadata.Key);
-
-                if (!metadataNames.Add(identifier))
-                {
-                    context.ReportDiagnostic(Diagnostic.Create(DiagnosticDescriptors.MetadataNameCollision, Location.None, metadata.Key, identifier));
-                    hasErrors = true;
-                }
-            }
-        }
-
         if (hasErrors)
         {
             return;

@@ -118,22 +118,21 @@ public sealed class AssemblyInfoGeneratorTests
     }
 
     [Test]
-    public async Task Initialize_WithMetadataCollisions_ReportsDiagnosticsSnapshot(CancellationToken cancellationToken = default)
+    public async Task Initialize_WithDuplicatePropertyNames_GeneratesDuplicatePropertiesSnapshot(CancellationToken cancellationToken = default)
     {
         // Arrange
         const string source = """
             using System.Reflection;
             using SlusserLabs.AssemblyInfo;
 
-            [assembly: AssemblyMetadata("Company", "reserved")]
-            [assembly: AssemblyMetadata("Repository-Url", "first")]
-            [assembly: AssemblyMetadata("Repository.Url", "second")]
+            [assembly: AssemblyDescription("Assembly description")]
+            [assembly: AssemblyMetadata("Description", "Metadata description")]
 
-            [GenerateAssemblyInfo(GenerateAssemblyInfoOptions.AssemblyMetadata)]
-            public partial class Conflicts;
+            [GenerateAssemblyInfo(GenerateAssemblyInfoOptions.AssemblyDescription | GenerateAssemblyInfoOptions.AssemblyMetadata)]
+            public partial class DuplicateProperties;
             """;
 
         // Act & Assert
-        await GeneratorTestHelper.VerifyAsync(source, cancellationToken);
+        await GeneratorTestHelper.VerifyAsync(source, "CS0102", cancellationToken);
     }
 }

@@ -22,19 +22,6 @@ internal static class EmbeddedSources
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute]
         """;
 
-    public static string[] StandardMemberNames { get; } =
-    [
-        "Configuration",
-        "Company",
-        "AssemblyTitle",
-        "Description",
-        "Product",
-        "Copyright",
-        "AssemblyVersion",
-        "InformationalVersion",
-        "FileVersion",
-    ];
-
     public static string Generate(AssemblyInfoTarget target, AssemblyInfoData assemblyInfo)
     {
         var source = new StringBuilder(_header);

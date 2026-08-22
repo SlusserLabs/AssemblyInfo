@@ -71,7 +71,7 @@ Custom `AssemblyMetadataAttribute` values are also supported and makes it easy t
 
 generates a `BuildDate` constant.
 
-I would recommend always using key names that are also valid C# identifiers because they will be generated as the name of a `const`, however, the source generator will attempt to make them valid C# identifiers by replacing invalid characters if they are not otherwise. The generator reports an error if a converted name conflicts with another metadata key or a standard generated constant.
+I would recommend always using key names that are also valid C# identifiers because they will be generated as the name of a `const`. When a key name is not a valid identifier, the generator will attempt to create a valid C# identifier by replacing unsupported characters.
 
 ### Advanced Options
 
@@ -92,7 +92,7 @@ public static partial class AssemblyInfo
 
 ## AI Disclosure
 
-This project was built with the help of Codex 5.6 Sol for code generation. As with any tool I use for coding, I am fully responsible for the end result and only put forward this project with full confidence I have reviewed every line and it meets my expectations wether that line of code was fully AI generated, AI assisted, or entirely from my own Muppet fingers on the keyboard.
+This project was built with the help of Codex 5.6 Sol for code generation. As with any tool I use for coding, I am fully responsible for the end result and only put forward this project with full confidence I have reviewed every line. Whether a line of code in this project was fully AI generated, AI assisted, or entirely from my own Muppet fingers on the keyboard, it is held to the same expectations.
 
 ## Acknowledgements
 

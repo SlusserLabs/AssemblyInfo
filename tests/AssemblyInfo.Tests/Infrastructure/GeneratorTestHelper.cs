@@ -7,15 +7,34 @@ internal static class GeneratorTestHelper
 {
     public static async ValueTask VerifyAsync(string source, CancellationToken cancellationToken = default)
     {
+        await VerifyCoreAsync(source, expectedCompilationErrorId: default, cancellationToken);
+    }
+
+    public static async ValueTask VerifyAsync(string source, string expectedCompilationErrorId, CancellationToken cancellationToken = default)
+    {
+        ArgumentException.ThrowIfNullOrEmpty(expectedCompilationErrorId);
+        await VerifyCoreAsync(source, expectedCompilationErrorId, cancellationToken);
+    }
+
+    private static async ValueTask VerifyCoreAsync(string source, string? expectedCompilationErrorId, CancellationToken cancellationToken)
+    {
         // Compile the supplied source and run the generator against it
         var compilation = CreateCompilation(source, cancellationToken);
         var generator = new AssemblyInfoGenerator();
         GeneratorDriver driver = CSharpGeneratorDriver.Create(generator);
         driver = driver.RunGeneratorsAndUpdateCompilation(compilation, out var outputCompilation, out _, cancellationToken);
 
-        // Assert no errors
-        var compilationErrors = outputCompilation.GetDiagnostics(cancellationToken).Where(static diagnostic => diagnostic.Severity == DiagnosticSeverity.Error);
-        await Assert.That(compilationErrors).IsEmpty();
+        // Assert only the expected compilation errors
+        var compilationErrors = outputCompilation.GetDiagnostics(cancellationToken).Where(static diagnostic => diagnostic.Severity == DiagnosticSeverity.Error).ToArray();
+        if (expectedCompilationErrorId is null)
+        {
+            await Assert.That(compilationErrors).IsEmpty();
+        }
+        else
+        {
+            await Assert.That(compilationErrors).Count().IsEqualTo(1);
+            await Assert.That(compilationErrors[0].Id).IsEqualTo(expectedCompilationErrorId);
+        }
 
         await Verify(driver);
     }
