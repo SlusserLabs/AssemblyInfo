@@ -83,14 +83,14 @@ jobs:
           grep -Fxq 'LICENSE' <<< "$package_contents"
           grep -Fxq 'package-icon.png' <<< "$package_contents"
           grep -Eq '^analyzers/dotnet/cs/(.*/)?SlusserLabs.AssemblyInfo.dll$' <<< "$package_contents"
-          grep -Fxq 'analyzers/dotnet/cs/SlusserLabs.AssemblyInfo.Attributes.dll' <<< "$package_contents"
+          grep -Fxq 'analyzers/dotnet/cs/netstandard2.0/SlusserLabs.AssemblyInfo.Attributes.dll' <<< "$package_contents"
           grep -Fxq 'lib/netstandard2.0/SlusserLabs.AssemblyInfo.Attributes.dll' <<< "$package_contents"
           if grep -Eq '\.pdb$' <<< "$package_contents"; then
             echo 'The main package must not contain PDB files.' >&2
             exit 1
           fi
-          grep -Eq '(^|/)SlusserLabs.AssemblyInfo.pdb$' <<< "$symbols_contents"
-          grep -Eq '(^|/)SlusserLabs.AssemblyInfo.Attributes.pdb$' <<< "$symbols_contents"
+          grep -Fxq 'analyzers/dotnet/cs/netstandard2.0/SlusserLabs.AssemblyInfo.pdb' <<< "$symbols_contents"
+          grep -Fxq 'analyzers/dotnet/cs/netstandard2.0/SlusserLabs.AssemblyInfo.Attributes.pdb' <<< "$symbols_contents"
 
       - name: Test package in a clean consumer project
         shell: bash
