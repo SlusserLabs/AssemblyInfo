@@ -2,8 +2,8 @@ using System.Diagnostics;
 
 namespace SlusserLabs.AssemblyInfo;
 
-// NOTE: The use of SLUSSERLABS_ASSEMBLYINFO_USAGES is trick to make the attribute
-// available during compilation but omit it from the runtime dependencies.
+// SLUSSERLABS_ASSEMBLYINFO_USAGES keeps the marker available during compilation while
+// preventing its usage from being emitted into consumer assembly metadata.
 // See: https://andrewlock.net/creating-a-source-generator-part-7-solving-the-source-generator-marker-attribute-problem-part1/
 
 /// <summary>

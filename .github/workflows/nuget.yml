@@ -84,7 +84,11 @@ jobs:
           grep -Fxq 'package-icon.png' <<< "$package_contents"
           grep -Eq '^analyzers/dotnet/cs/(.*/)?SlusserLabs.AssemblyInfo.dll$' <<< "$package_contents"
           grep -Fxq 'analyzers/dotnet/cs/netstandard2.0/SlusserLabs.AssemblyInfo.Attributes.dll' <<< "$package_contents"
-          grep -Fxq 'lib/netstandard2.0/SlusserLabs.AssemblyInfo.Attributes.dll' <<< "$package_contents"
+          grep -Fxq 'ref/netstandard2.0/SlusserLabs.AssemblyInfo.Attributes.dll' <<< "$package_contents"
+          if grep -Eq '^(lib|runtimes)/.*\.dll$' <<< "$package_contents"; then
+            echo 'The package must not contain runtime DLL assets.' >&2
+            exit 1
+          fi
           if grep -Eq '\.pdb$' <<< "$package_contents"; then
             echo 'The main package must not contain PDB files.' >&2
             exit 1
@@ -99,10 +103,15 @@ jobs:
         run: |
           set -euo pipefail
           package=$(find "${{ env.PACKAGE_OUTPUT }}" -maxdepth 1 -name 'SlusserLabs.AssemblyInfo.*.nupkg' ! -name '*.snupkg' -print -quit)
+          symbols_package=$(find "${{ env.PACKAGE_OUTPUT }}" -maxdepth 1 -name 'SlusserLabs.AssemblyInfo.*.snupkg' -print -quit)
           package_version=${package##*/SlusserLabs.AssemblyInfo.}
           package_version=${package_version%.nupkg}
           dotnet restore tests/AssemblyInfo.PackageTests/AssemblyInfo.PackageTests.csproj --configfile tests/AssemblyInfo.PackageTests/NuGet.config -p:AssemblyInfoPackageVersion="$package_version"
-          dotnet run --project tests/AssemblyInfo.PackageTests/AssemblyInfo.PackageTests.csproj --configuration Release --no-restore -p:AssemblyInfoPackageVersion="$package_version"
+          assets_file=tests/AssemblyInfo.PackageTests/obj/project.assets.json
+          package_key="SlusserLabs.AssemblyInfo/$package_version"
+          jq -e --arg package "$package_key" '[.targets[][$package].compile // {} | keys[]] | any(. == "ref/netstandard2.0/SlusserLabs.AssemblyInfo.Attributes.dll")' "$assets_file"
+          jq -e --arg package "$package_key" '[.targets[][$package].runtime // {} | keys[]] | length == 0' "$assets_file"
+          dotnet run --project tests/AssemblyInfo.PackageTests/AssemblyInfo.PackageTests.csproj --configuration Release --no-restore -p:AssemblyInfoPackageVersion="$package_version" -- "$package" "$symbols_package"
 
       - name: Upload package artifact
         uses: actions/upload-artifact@v7

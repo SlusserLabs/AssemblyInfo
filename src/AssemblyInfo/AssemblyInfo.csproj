@@ -26,6 +26,7 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <BuildOutputTargetFolder>analyzers/dotnet/cs</BuildOutputTargetFolder>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <NoWarn>$(NoWarn);NU5131</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -43,7 +44,7 @@
 
   <ItemGroup>
     <None Include="$(OutputPath)SlusserLabs.AssemblyInfo.Attributes.dll" Pack="true" PackagePath="analyzers/dotnet/cs/netstandard2.0" Visible="false" />
-    <None Include="$(OutputPath)SlusserLabs.AssemblyInfo.Attributes.dll" Pack="true" PackagePath="lib/netstandard2.0" Visible="true" />
+    <None Include="$(OutputPath)SlusserLabs.AssemblyInfo.Attributes.dll" Pack="true" PackagePath="ref/netstandard2.0" Visible="true" />
     <None Include="../../assets/package-icon.png" Pack="true" PackagePath="/" Visible="false" />
     <None Include="../../README.md" Pack="true" PackagePath="/" Visible="false" />
     <None Include="../../LICENSE" Pack="true" PackagePath="/" Visible="false" />
