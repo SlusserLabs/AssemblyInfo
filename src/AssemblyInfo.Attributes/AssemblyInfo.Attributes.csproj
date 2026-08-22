@@ -7,14 +7,10 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <LangVersion>latest</LangVersion>
-    <Deterministic>true</Deterministic>
   </PropertyGroup>
 
   <PropertyGroup>
     <IsPackable>false</IsPackable>
-    <EmbedUntrackedSources>true</EmbedUntrackedSources>
-    <ContinuousIntegrationBuild Condition="'$(CI)' == 'true'">true</ContinuousIntegrationBuild>
-    <DebugType>portable</DebugType>
   </PropertyGroup>
 
 </Project>

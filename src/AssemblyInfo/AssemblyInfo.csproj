@@ -7,26 +7,21 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <LangVersion>latest</LangVersion>
-    <Deterministic>true</Deterministic>
     <IsRoslynComponent>true</IsRoslynComponent>
     <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
   </PropertyGroup>
-  
+
   <PropertyGroup>
     <IsPackable>true</IsPackable>
     <PackageId>SlusserLabs.AssemblyInfo</PackageId>
     <Authors>Jacob Slusser</Authors>
+    <Title>SlusserLabs AssemblyInfo</Title>
     <Copyright>SlusserLabs, Jacob Slusser, and/or affiliate. All rights reserved.</Copyright>
     <Description>Generates reflection-free constants for assembly attributes and metadata.</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageIcon>package-icon.png</PackageIcon>
     <PackageProjectUrl>https://github.com/SlusserLabs/AssemblyInfo</PackageProjectUrl>
     <PackageTags>assemblyinfo assembly-metadata assembly-attributes source-generator incremental-generator roslyn reflection-free aot msbuild</PackageTags>
-    <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/SlusserLabs/AssemblyInfo.git</RepositoryUrl>
-    <PublishRepositoryUrl>true</PublishRepositoryUrl>
-    <EmbedUntrackedSources>true</EmbedUntrackedSources>
-    <ContinuousIntegrationBuild Condition="'$(CI)' == 'true'">true</ContinuousIntegrationBuild>
-    <DebugType>portable</DebugType>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <BuildOutputTargetFolder>analyzers/dotnet/cs</BuildOutputTargetFolder>
@@ -49,8 +44,22 @@
   <ItemGroup>
     <None Include="$(OutputPath)SlusserLabs.AssemblyInfo.Attributes.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
     <None Include="$(OutputPath)SlusserLabs.AssemblyInfo.Attributes.dll" Pack="true" PackagePath="lib/netstandard2.0" Visible="true" />
+    <None Include="../../assets/package-icon.png" Pack="true" PackagePath="/" Visible="false" />
     <None Include="../../README.md" Pack="true" PackagePath="/" Visible="false" />
     <None Include="../../LICENSE" Pack="true" PackagePath="/" Visible="false" />
   </ItemGroup>
+
+  <PropertyGroup>
+    <TargetsForTfmSpecificDebugSymbolsInPackage>$(TargetsForTfmSpecificDebugSymbolsInPackage);IncludeAssemblyInfoAttributesSymbols</TargetsForTfmSpecificDebugSymbolsInPackage>
+  </PropertyGroup>
+
+  <Target Name="IncludeAssemblyInfoAttributesSymbols">
+    <ItemGroup>
+      <TfmSpecificDebugSymbolsFile Include="$(OutputPath)SlusserLabs.AssemblyInfo.Attributes.pdb">
+        <TargetPath>SlusserLabs.AssemblyInfo.Attributes.pdb</TargetPath>
+        <TargetFramework>$(TargetFramework)</TargetFramework>
+      </TfmSpecificDebugSymbolsFile>
+    </ItemGroup>
+  </Target>
 
 </Project>

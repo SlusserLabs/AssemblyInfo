@@ -71,15 +71,23 @@ jobs:
           set -euo pipefail
           package=$(find "${{ env.PACKAGE_OUTPUT }}" -maxdepth 1 -name '*.nupkg' ! -name '*.snupkg' -print -quit)
           symbols_package=$(find "${{ env.PACKAGE_OUTPUT }}" -maxdepth 1 -name '*.snupkg' -print -quit)
+          package_version=${package##*/SlusserLabs.AssemblyInfo.}
+          package_version=${package_version%.nupkg}
           unzip -l "$package"
+          unzip -p "$package" SlusserLabs.AssemblyInfo.nuspec | grep -q "<version>$package_version</version>"
+          unzip -p "$package" SlusserLabs.AssemblyInfo.nuspec | grep -Eq '<repository type="git" url="https://github.com/SlusserLabs/AssemblyInfo.git" branch="[^"]+" commit="[0-9a-f]{40}" />'
           unzip -l "$package" | grep -q 'README.md'
           unzip -l "$package" | grep -q 'LICENSE'
+          unzip -l "$package" | grep -q 'package-icon.png'
           unzip -l "$package" | grep -Eq 'analyzers/dotnet/cs/(.*/)?SlusserLabs.AssemblyInfo.dll'
+          unzip -l "$package" | grep -q 'analyzers/dotnet/cs/SlusserLabs.AssemblyInfo.Attributes.dll'
+          unzip -l "$package" | grep -q 'lib/netstandard2.0/SlusserLabs.AssemblyInfo.Attributes.dll'
           if unzip -l "$package" | grep -q '\.pdb'; then
             echo 'The main package must not contain PDB files.' >&2
             exit 1
           fi
           unzip -l "$symbols_package" | grep -q 'SlusserLabs.AssemblyInfo.pdb'
+          unzip -l "$symbols_package" | grep -q 'SlusserLabs.AssemblyInfo.Attributes.pdb'
 
       - name: Test package in a clean consumer project
         shell: bash

@@ -42,15 +42,15 @@ The result is a generated class with the following `public const` fields:
 ```cs
 public static partial class AssemblyInfo
 {
-  public const string Configuration;
   public const string Company;
-  public const string AssemblyTitle;
-  public const string Description;
-  public const string Product;
+  public const string Configuration;
   public const string Copyright;
-  public const string AssemblyVersion;
-  public const string InformationalVersion;
+  public const string Description;
   public const string FileVersion;
+  public const string InformationalVersion;
+  public const string Product;
+  public const string AssemblyTitle;
+  public const string AssemblyVersion;
 }
 ```
 
@@ -92,7 +92,7 @@ public static partial class AssemblyInfo
 
 ## AI Disclosure
 
-This project was built with the help of Codex 5.6 Sol for code generation. As with any tool I use for coding, I am fully responsible for the end result and only put forward this project with full confidence I have reviewed every line. Whether a line of code in this project was fully AI generated, AI assisted, or entirely from my own Muppet fingers on the keyboard, it is held to the same expectations.
+This project was built with the help of Codex 5.6 Sol for code generation. As with any tool I use for coding, I am fully responsible for the end result and only put forward this project with full confidence that I have reviewed every line. Whether a line of code in this project was fully AI generated, AI assisted, or entirely from my own Muppet fingers on the keyboard, it is held to the same expectations.
 
 ## Acknowledgements
 
